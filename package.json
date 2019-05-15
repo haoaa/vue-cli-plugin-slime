@@ -1,0 +1,18 @@
+{
+  "name": "vue-cli-plugin-slime",
+  "version": "0.0.9",
+  "main": "index.js",
+  "description": "vue-cli plugin to launch multi cli service a time",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haoaa/vue-cli-plugin-slime.git"
+  },
+  "keywords": [
+    "vue",
+    "cli",
+    "slime"
+  ],
+  "author": "王大锤",
+  "license": "MIT",
+  "homepage": "https://github.com/haoaa/vue-cli-plugin-slime#readme"
+}
