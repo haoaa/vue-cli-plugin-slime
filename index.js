@@ -1,17 +1,24 @@
-// const VueAutoRoutingPlugin = require('vue-auto-routing/lib/webpack-plugin')
 
+let path = require('path')
 module.exports = (api, options) => {
+  const rawArgv = process.argv.slice(2)
+  const args = require('minimist')(rawArgv)
 
   //Modifying webpack config
   api.chainWebpack(webpackConfig => {
-    // webpackConfig
-    //   .plugin('vue-auto-routing')
-    //     .use(VueAutoRoutingPlugin, [
-    //       {
-    //         pages: 'src/pages',
-    //         nested: true
-    //       }
-    //     ])
+    webpackConfig
+        .entry('index')
+        .add(path.resolve(api.service.context, `src/project/${args.project}/main.ts`))
+        .end()
+        .output
+        .path(path.resolve(api.service.context, `dist/${args.project}`)) // 2
+        .publicPath(`/newoffline/${args.project}`) // 1
+    console.log(webpackConfig.toConfig())
+
+    options.outputDir = `dist/${args.project}` // 2
+    options.baseUrl = `/newoffline/${args.project}` // 1
+    options.devServer.port = args.port
+    void 0
   })
 
   // Add a new cli-service command
@@ -36,7 +43,7 @@ module.exports = (api, options) => {
   const { serve } = api.service.commands
 
   const serveFn = serve.fn
-  
+
   serve.fn = (...args) => {
     return serveFn(...args).then(res => {
       if (res && res.url) {
